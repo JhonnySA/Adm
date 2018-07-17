@@ -1,0 +1,8 @@
+Django==1.11.14
+django-adminlte2==0.1.6
+django-appconf==1.0.2
+django-datatable==0.3.1
+django-datetime-widget-fa==0.10.0
+Django-Select2==5.11.1
+mysqlclient==1.3.9
+pytz==2018.5
