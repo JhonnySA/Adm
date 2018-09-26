@@ -1,0 +1,103 @@
+{% extends 'baseform.html' %}
+{% load static %}
+
+{% block form-header %}
+    {% if formEstudiante.instance.pk == None %} Agregando {% endif %} Apoderado
+{% endblock form-header %}
+{% block form-post %}
+    <script type="text/javascript">
+        actionPost = 'refrescarTablaEstudiante';
+
+        function refrescarTablaEstudiante() {
+            $("#tablaEstudiante").DataTable().ajax.reload(null, false);
+        }
+    </script>
+{% endblock form-post %}
+
+{% block form-body %}
+    {{ formApoderado.personaid }}
+    <div class="text-center lead">Informacion general de Apoderado</div>
+    <div class="row">
+        {% include 'campoform.html' with campo=formApoderado.dni ancho=6 espacio=3 %}
+    </div>
+    <div class="row">
+        {% include 'campoform.html' with campo=formApoderado.paterno ancho=6 %}
+        {% include 'campoform.html' with campo=formApoderado.materno ancho=6 %}
+    </div>
+    <div class="row">
+        {% include 'campoform.html' with campo=formApoderado.nombre ancho=6 %}
+        {% include 'campoform.html' with campo=formApoderado.sexo ancho=6 %}
+    </div>
+    <div class="row">
+        {% include 'campoform.html' with campo=formApoderado.fechanacimiento ancho=6 %}
+        {% include 'campoform.html' with campo=formApoderado.telefono ancho=6 %}
+    </div>
+    <div class="row">
+        {% include 'campoform.html' with campo=formApoderado.celular ancho=6 %}
+        {% include 'campoform.html' with campo=formApoderado.correo ancho=6 %}
+    </div>
+    <div class="row">
+        {% include 'campoform.html' with campo=formApoderado.direccion ancho=6 %}
+        {% include 'campoform.html' with campo=formApoderado.ocupacion ancho=6 %}
+    </div>
+{% endblock form-body %}
+
+{% block form-footer %}
+    {% include 'button.html' with tipo="submit" clase="success" icono="save" texto="Guardar" %}
+    {% include 'button.html' with tipo="submit" clase="default" icono="arrow-left" dismiss="modal" texto="Cancelar" %}
+{% endblock form-footer %}
+
+{% block form-script-end %}
+    <form method="post" id="formDni">{% csrf_token %}</form>
+    <div id="capaDni"></div>
+
+    <form method="post" id="formDniApoderado">{% csrf_token %}</form>
+    <div id="capaDniApoderado"></div>
+
+    <script type="text/javascript">
+
+        // Funcion para buscar y verificar si el dni ingresado es correcto, sino mostrar alerta
+        function buscarPersona(dni, form) {
+            dnivalor = dni.val();
+            if (dnivalor.length < dni.attr('minlength')) {
+                swal({
+                    title: 'Alerta',
+                    text: 'El dni ingresado es incorrecto',
+                    type: 'warning'
+                }).then(function (value) {
+                        setTimeout(function () {
+                            dni.focus();
+                        }, 500);
+                    }
+                )
+            } else {
+                url = '{% url 'inicio:persona_buscar' 0 %}';
+                url = url.replace('/0', '/' + dnivalor);
+                form.prop('action', url).submit();
+            }
+        };
+
+        // Llamar a la funcion de busqueda de persona al click del 'INPUT SEARCH' - ESTUDIANTE
+        $('#id_dni').parent().find('button').on('click', function () {
+            buscarPersona($('#id_dni'), $('#formDni'));
+        });
+
+        // AjaxForm para recuperar datos desde la persona al estudiante
+        $('#formDni').ajaxForm({
+            dataType: 'json',
+            target: $('#capaDni'),
+            success: function (e) {
+                $('#id_personaid').val(e.id);
+                $('#id_paterno').val(e.paterno);
+                $('#id_materno').val(e.materno);
+                $('#id_nombre').val(e.nombre);
+                $('#id_sexo').val(e.sexo);
+
+                // Reformatear fecha
+                fecha = e.fechanacimiento.split('/');
+                fecha = fecha[1] + '/' + fecha[0] + '/' + fecha[2];
+                $('#id_fechanacimiento').parent().data('datetimepicker').setDate(new Date(fecha));
+            }
+        });
+    </script>
+{% endblock form-script-end %}

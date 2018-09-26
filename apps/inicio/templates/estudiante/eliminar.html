@@ -1,0 +1,24 @@
+{% extends 'baseform.html' %}
+{% load static %}
+
+{% block form-header %}Eliminando estudiante{% endblock form-header %}
+{% block form-post %}
+    <script type="text/javascript">
+        actionPost = 'refrescarTablaEstudiante';
+
+        function refrescarTablaEstudiante() {
+            $("#tablaEstudiante").DataTable().ajax.reload(null, false);
+        }
+    </script>
+{% endblock form-post %}
+
+{% block form-body %}
+    <div class="row">
+    Nombre: {{ object.persona.nombre }}
+    </div>
+{% endblock form-body %}
+
+{% block form-footer %}
+    {% include 'button.html' with tipo="submit" clase="danger" icono="remove" texto="Eliminar" %}
+    {% include 'button.html' with tipo="submit" clase="default" icono="arrow-left" dismiss="modal" texto="Cancelar" %}
+{% endblock form-footer %}

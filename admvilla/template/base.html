@@ -1,0 +1,157 @@
+{% load static %}<!DOCTYPE html>
+<html>
+<head>
+    {% block title_outer %}
+        <title> VillaEdu - {% block titulo_pagina %}{% endblock %} </title>
+    {% endblock %}
+
+    {% block meta %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    {% endblock %}
+
+    {% block stylesheets %}
+        {% include 'adminlte/lib/_styles.html' %}
+        <link rel="stylesheet" href="{% static 'css/app.css' %}">
+        <link rel="stylesheet" href="{% static 'datatable/datatables.min.css' %}">
+        <link rel="stylesheet" href="{% static 'select2/css/select2.min.css' %}">
+        <link rel="stylesheet" href="{% static 'toastr/toastr.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/datetimepicker.css' %}">
+        <link rel="stylesheet" href="{% static 'icheck/skins/all.css' %}">
+
+        {# WaitMe #}
+        <link rel="stylesheet" href="{% static 'waitMe/css/waitMe.min.css' %}">
+
+        {# Sweet alert #}
+        <link rel="stylesheet" href="{% static 'sweetAlert/dist/sweetalert2.min.css' %}">
+
+    {% endblock %}
+
+    {% block javascript %}
+        {% include 'adminlte/lib/_scripts.html' %}
+        <script src="{% static 'datatable/datatables.min.js' %}"></script>
+        <script src="{% static 'js/jquery.form.min.js' %}"></script>
+        <script src="{% static 'select2/select2.full.min.js' %}"></script>
+        <script src="{% static 'select2/i18n/es.js' %}"></script>
+        <script src="{% static 'select2/django_select2.js' %}"></script>
+        <script src="{% static 'toastr/toastr.min.js' %}"></script>
+
+        <script src="{% static 'js/bootstrap-datetimepicker.js' %}"></script>
+        <script src="{% static 'js/locales/bootstrap-datetimepicker.es.js' %}"></script>
+
+        {# Chech Box #}
+        <script src="{% static 'icheck/icheck.min.js' %}"></script>
+
+        {# WaitMe #}
+        <script src="{% static 'waitMe/js/waitMe.min.js' %}"></script>
+
+        {# Sweet alert js #}
+        <script src="{% static 'sweetAlert/dist/sweetalert2.all.min.js' %}"></script>
+
+
+    {% endblock %}
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="hold-transition skin-blue sidebar-mini
+        {% block body_class %}{% block bodyclass %}{% endblock %}{% endblock %}">
+
+{% block body %}
+    <div class="wrapper">
+        {% block nav_header %}
+            {% include 'adminlte/lib/_main_header.html' %}
+        {% endblock %}
+
+        {% block nav_sidebar %}
+            {% include '_main_sidebar.html' %}
+        {% endblock %}
+
+        {% block content_wrapper %}
+            <div class="content-wrapper">
+                {% block content_header %}
+                    <section class="content-header text-center">
+                        <h1>
+                            {% block page_name %}{% endblock %}
+                            {% block no_description %}
+                                <small class="text-info text-bold">{% block page_description %}{% endblock %}</small>
+                            {% endblock %}
+                        </h1>
+                        {% block breadcrumbs %}
+                            {# Breadcrumb implementation left to developers #}
+                        {% endblock %}
+                    </section>
+                {% endblock %}
+
+                {% block content_outer %}
+                    <section class="content">
+                        {% block messages %}
+                            {% include 'adminlte/lib/_messages.html' %}
+                        {% endblock %}
+
+                        {% block content_block_wrap %}
+                            {% block contentido_pagina %}{% endblock %}
+                        {% endblock %}
+                    </section>
+                {% endblock %}
+
+            </div>
+        {% endblock content_wrapper %}
+
+        {% block nav_footer %}
+            {% include 'adminlte/lib/_main_footer.html' %}
+        {% endblock %}
+
+    </div>
+{% endblock body %}
+
+<div class="modal fade" id="modalMaestro" role="dialog" tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modalMaestro2" role="dialog" tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="modal_contenido2">
+        </div>
+    </div>
+</div>
+
+<script type="application/javascript">
+
+    function msgWaitMe(msg) {
+        $('body').waitMe({
+            effect: 'roundBounce',
+            text: msg,
+            bg: 'rgba(255,255,255,0.7)',
+            color: '#000',
+            maxSize: '',
+            waitTime: -1,
+            textPos: 'vertical',
+            fontSize: '',
+            source: '',
+            onClose: function () {
+            }
+        });
+    }
+
+    $('#modalMaestro').on('show.bs.modal', function () {
+        msgWaitMe('Espere por favor');
+    }).on('shown.bs.modal', function () {
+        $('body').waitMe('hide');
+    }).on('hidden.bs.modal', function () {
+        // remove the bs.modal data attribute from it
+        $(this).find('.modal-content').html('');
+    });
+    $('body').on('hidden.bs.modal', '.modal', function () {
+        $(this).removeData('bs.modal');
+    });
+</script>
+
+
+{% block extra_foot %}{% endblock %}
+</body>
+</html>

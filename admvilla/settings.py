@@ -13,7 +13,12 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from django.urls import reverse_lazy
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Asignar una direccion 'SETTINGS_DIR'
+SETTINGS_DIR = os.path.normpath(os.path.dirname(__file__))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -24,7 +29,7 @@ SECRET_KEY = '8hq=7d&as@ts5-@$okkd4^^r6hd^=rv8v$s_0ss-lv%!o8+vtb'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -35,6 +40,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_adminlte',
+    'django_adminlte_theme',
+    'apps.inicio.table',
+    'django_select2',
+    'datetimewidget',
+    'apps.inicio',
+    'apps.detalles_pagos',
+    'apps.recursos',
+    'apps.reusables',
+    'apps.servicios',
 ]
 
 MIDDLEWARE = [
@@ -52,7 +67,7 @@ ROOT_URLCONF = 'admvilla.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "admvilla/template")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,9 +95,12 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'edu',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': '',
         'HOST': 'localhost',  # Or an IP Address that your DB is hosted on
         'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
     }
 }
 
@@ -122,6 +140,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STACTICFILES_DIR=[
-    os.path.join(BASE_DIR,'admvilla/static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'admvilla/static')
 ]
+
+# Con eso django buscara todas los templates dentro de las carpetas 'templates'
+TEMPLATE_DIR = (
+    os.path.join(SETTINGS_DIR, 'templates')
+)
+
+LOGIN_URL=reverse_lazy('login')
+LOGIN_REDIRECT_URL = reverse_lazy('inicio:inicio')
+LOGOUT_REDIRECT_URL = reverse_lazy('logout')

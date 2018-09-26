@@ -1,0 +1,6 @@
+<button type="{% if tipo %}{{ tipo }}{% else %}button{% endif %}"
+        class="btn btn-{% if clase %}{{ clase }}{% else %}primary{% endif %}"
+        data-dismiss="{{ dismiss }}">
+    <i class="fa fa-{{ icono }}"></i>
+    {{ texto }}
+</button>

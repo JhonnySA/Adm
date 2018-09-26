@@ -1,0 +1,7 @@
+.datatables-search {
+    width: 100% !important;
+}
+
+.datatables-search::placeholder {
+    line-height: 2 !important;
+}

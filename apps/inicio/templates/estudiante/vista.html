@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load table_tags %}
+
+{% block titulo_pagina %} Estudiantes registrados {% endblock titulo_pagina %}
+
+{% block page_name %}Lista de estudiantes{% endblock page_name %}
+{% block page_description %}Año 2016{% endblock page_description %}
+
+{% block breadcrumbs %}
+    {# Ruta a travex de las URLS #}
+    <ol class="breadcrumb">
+        <li class="active">
+            ruta002
+        </li>
+    </ol>
+{% endblock breadcrumbs %}
+
+{% block contentido_pagina %}
+
+    <div class="input-group input-group-sm">
+        <input class="form-control" type="text">
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-info btn-flat">Go!</button>
+        </span>
+    </div>
+    <br>
+
+    <div class="box box-solid">
+        <div class="box-body">
+            {% render_table tablaEstudiante %}
+        </div>
+    </div>
+{% endblock contentido_pagina %}

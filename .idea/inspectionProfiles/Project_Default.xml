@@ -16,6 +16,7 @@
           <option value="apps.inicio.formstotal.actor.forms" />
           <option value="apps.alquileres.migrations.urls.urlPatterns" />
           <option value="apps.alquileres.formstotal.alquiler.forms" />
+          <option value="apps.inicio.tables_inicio.estudiante.TablaDefult" />
         </list>
       </option>
     </inspection_tool>

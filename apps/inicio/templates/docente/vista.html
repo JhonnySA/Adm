@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load table_tags %}
+
+{% block titulo_pagina %}Docentes registrados{% endblock titulo_pagina %}
+{% block page_name %}Lista de Docentes{% endblock page_name %}
+{% block page_description %}Año 2016{% endblock page_description %}
+
+{% block breadcrumbs %}
+    {# Ruta a travex de las URLS #}
+    <ol class="breadcrumb">
+        <li class="active">
+            ruta002
+        </li>
+    </ol>
+{% endblock breadcrumbs %}
+
+{% block contentido_pagina %}
+    <div class="box box-solid">
+        <div class="box-body">
+            {% render_table tablaDocente %}
+        </div>
+    </div>
+{% endblock contentido_pagina %}

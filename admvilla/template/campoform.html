@@ -1,0 +1,11 @@
+<div class="col-xs-{% if ancho %}{{ ancho }}{% else %}12{% endif %}
+            col-xs-offset-{% if espacio %}{{ espacio }}{% endif %}">
+    {{ campo.label_tag }}{% if campo.field.required %}<span class="text-danger text-bold">*</span>{% endif %}
+    {{ campo }}
+    {% for error in campo.errors %}
+        <!--recibe el mensaje del error en el formEstudiante-->
+        <label class="text-danger" for="">
+            {{ error|escape }}
+        </label>
+    {% endfor %}
+</div>

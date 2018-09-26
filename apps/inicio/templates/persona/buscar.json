@@ -1,0 +1,12 @@
+{
+  "id": {{ persona.pk|default:0 }},
+  "nombre": "{{ persona.nombre|default:'' }}",
+  "paterno": "{{ persona.paterno|default:'' }}",
+  "materno": "{{ persona.materno|default:'' }}",
+  "sexo": "{{ persona.sexo|default:'M' }}",
+  "fechanacimiento": "{{ persona.fechanacimiento|default:''|date:'d/m/Y' }}",
+  "telefono": "{{ persona.telefono|default:'' }}",
+  "celular": "{{ persona.celular|default:'' }}",
+  "correo": "{{ persona.correo|default:'' }}",
+  "direccion": "{{ persona.direccion|default:'' }}"
+}

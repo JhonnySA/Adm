@@ -1,0 +1,105 @@
+{% extends 'baseform.html' %}
+{% load static %}
+
+{% block form-header %}
+    {% if formDocente.instance.pk == None %}Agregando{% else %}Actualizando{% endif %} Docente
+{% endblock form-header %}
+{% block form-post %}
+    <script type="text/javascript">
+        actionPost = 'refrescarTablaDocente';
+
+        function refrescarTablaDocente() {
+            $("#tablaDocente").DataTable().ajax.reload(null, false);
+        }
+    </script>
+{% endblock form-post %}
+
+{% block form-body %}
+    {{ formDocente.personaid }}
+    <div class="text-center lead">Informacion general de Docente</div>
+    <div class="row">{% include 'campoform.html' with campo=formDocente.dni ancho=6 espacio=3 %}</div>
+
+    {# Bloque para señalar que la persona no existe #}
+    <div id='busquedaPersona' class="text-center"></div>
+
+    <div class="row">
+        {% include 'campoform.html' with campo=formDocente.paterno ancho=6 %}
+        {% include 'campoform.html' with campo=formDocente.materno ancho=6 %}
+    </div>
+    <div class="row">
+        {% include 'campoform.html' with campo=formDocente.nombre ancho=6 %}
+        {% include 'campoform.html' with campo=formDocente.sexo ancho=6 %}
+    </div>
+    <div class="row">
+        {% include 'campoform.html' with campo=formDocente.fechanacimiento ancho=6 %}
+        {% include 'campoform.html' with campo=formDocente.telefono ancho=6 %}
+    </div>
+    <div class="row">
+        {% include 'campoform.html' with campo=formDocente.celular ancho=6 %}
+        {% include 'campoform.html' with campo=formDocente.correo ancho=6 %}
+    </div>
+    <div class="row">
+        {% include 'campoform.html' with campo=formDocente.direccion ancho=6 %}
+        {% include 'campoform.html' with campo=formDocente.profesion ancho=6 %}
+    </div>
+    <div class="row">
+        {% include 'campoform.html' with campo=formDocente.gradoacademico ancho=6 %}
+        {% include 'campoform.html' with campo=formDocente.observacion ancho=6 %}
+    </div>
+{% endblock form-body %}
+
+{% block form-script-end %}
+    <form method="post" id="formDni">{% csrf_token %}</form>
+    <div id="capaDni"></div>
+
+    <script type="text/javascript">
+        $('#id_dni').parent().find('button').on('click', function () {
+            dni = $('#id_dni').val();
+            if (dni.length < $('#id_dni').attr('minlength')) {
+                swal({
+                    title: 'Alerta',
+                    text: 'El dni ingresado es incorrecto',
+                    type: 'warning'
+                }).then(function (value) {
+                        setTimeout(function () {
+                            dni.focus();
+                        }, 500);
+                    }
+                )
+            } else {
+                url = '{% url 'inicio:persona_buscar' 0 %}';
+                url = url.replace('/0', '/' + dni);
+                $('#formDni').prop('action', url).submit();
+            }
+        });
+
+        // AjaxForm para recuperar datos desde la persona al estudiante
+        $('#formDni').ajaxForm({
+            dataType: 'json',
+            target: $('#capaDni'),
+            success: function (e) {
+                if (e.id == 0) {
+                    $('#busquedaPersona').html('<code><i class="icon fa fa-warning"></i> El dni de la persona ingresada no existe...!</code>')
+                    $('#id_paterno').focus();
+                } else {
+                    $('#busquedaPersona').html('');
+                }
+                $('#id_personaid').val(e.id);
+                $('#id_paterno').val(e.paterno);
+                $('#id_materno').val(e.materno);
+                $('#id_nombre').val(e.nombre);
+
+                // Reformatear fecha
+                fecha = e.fechanacimiento.split('/');
+                fecha = fecha[1] + '/' + fecha[0] + '/' + fecha[2];
+                $('#id_fechanacimiento').parent().data('datetimepicker').setDate(new Date(fecha));
+
+                $('#id_sexo').val(e.sexo);
+                $('#id_telefono').val(e.telefono);
+                $('#id_celular').val(e.celular);
+                $('#id_correo').val(e.correo);
+                $('#id_direccion').val(e.direccion);
+            }
+        });
+    </script>
+{% endblock form-script-end %}
