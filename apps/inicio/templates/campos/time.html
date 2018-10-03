@@ -1,0 +1,14 @@
+<div class="bootstrap-timepicker">
+    <div class="input-group">
+        {% include "django/forms/widgets/input.html" %}
+        <div class="input-group-addon">
+            <i class="fa fa-clock-o"></i>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('.timepicker').timepicker({
+        showInputs: false
+    });
+</script>

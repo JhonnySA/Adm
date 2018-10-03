@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load table_tags %}
+
+{% block titulo_pagina %}Grupos registrados{% endblock titulo_pagina %}
+{% block page_name %}Catalogo de grupos{% endblock page_name %}
+{% block page_description %}Año 2018{% endblock page_description %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="active">
+            ruta002
+        </li>
+    </ol>
+{% endblock breadcrumbs %}
+
+{% block contentido_pagina %}
+    <div class="box box-solid">
+        <div class="box-body">
+            {% render_table tablaGrupo %}
+        </div>
+    </div>
+{% endblock contentido_pagina %}

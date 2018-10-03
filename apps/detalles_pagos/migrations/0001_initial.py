@@ -65,7 +65,7 @@ class Migration(migrations.Migration):
                 ('fechafin', models.DateField()),
                 ('observacion', models.CharField(max_length=200)),
                 ('docente', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='inicio.Docente')),
-                ('grupo', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='reusables.Grupo')),
+                ('reusables', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='reusables.Grupo')),
             ],
         ),
         migrations.AddField(

@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
                 ('grado', models.CharField(max_length=1)),
                 ('observacion', models.CharField(max_length=200)),
                 ('estudiante', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='inicio.Estudiante')),
-                ('grupo', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='reusables.Grupo')),
+                ('reusables', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='reusables.Grupo')),
                 ('institucion', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='inicio.Institucion')),
             ],
         ),

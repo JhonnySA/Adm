@@ -1,9 +1,12 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 
 from apps.inicio.models import Persona
 
 
-class PersonaBuscar(TemplateView):
+class PersonaBuscar(LoginRequiredMixin, TemplateView):
+    login_url = 'login'
+    redirect_field_name = ''
     template_name = 'persona/buscar.json'
     http_method_names = 'post'
     content_type = 'application/json'

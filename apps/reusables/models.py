@@ -34,3 +34,6 @@ class Grupo(models.Model):
 
     def __unicode__(self):
         return self.id + ' : ' + str(self.horainicio) + ' - ' + str(self.horafin)
+
+    def get_absolute_url(self):
+        return ''

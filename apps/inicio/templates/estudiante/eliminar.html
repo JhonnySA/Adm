@@ -14,7 +14,9 @@
 
 {% block form-body %}
     <div class="row">
-    Nombre: {{ object.persona.nombre }}
+        <div class="col-xs-12">
+            <p class="text-center"><code><i class="icon fa fa-warning"></i> ¿Esta seguro de que desea eliminar este estudiante...?</code></p>
+        </div>
     </div>
 {% endblock form-body %}
 

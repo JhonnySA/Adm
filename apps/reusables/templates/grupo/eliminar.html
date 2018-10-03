@@ -1,13 +1,13 @@
 {% extends 'baseform.html' %}
 {% load static %}
 
-{% block form-header %}Eliminando docente{% endblock form-header %}
+{% block form-header %}Eliminando grupo{% endblock form-header %}
 {% block form-post %}
     <script type="text/javascript">
-        actionPost = 'refrescarTablaDocente';
+        actionPost = 'refrescarTablaGrupo';
 
-        function refrescarTablaDocente() {
-            $("#tablaDocente").DataTable().ajax.reload(null, false);
+        function refrescarTablaGrupo() {
+            $("#tablaGrupo").DataTable().ajax.reload(null, false);
         }
     </script>
 {% endblock form-post %}
@@ -15,7 +15,7 @@
 {% block form-body %}
     <div class="row">
         <div class="col-xs-12">
-            <p class="text-center"><code><i class="icon fa fa-warning"></i> ¿Esta seguro de que desea eliminar este docente...?</code></p>
+            <p class="text-center"><code><i class="icon fa fa-warning"></i> ¿Esta seguro de que desea eliminar este grupo...?</code></p>
         </div>
     </div>
 {% endblock form-body %}
@@ -23,6 +23,4 @@
 {% block form-footer %}
     {% include 'button.html' with tipo="submit" clase="danger" icono="remove" texto="Eliminar" %}
     {% include 'button.html' with tipo="submit" clase="default" icono="arrow-left" dismiss="modal" texto="Cancelar" %}
-
-    <button id="btn-cancelar" type="submit" class="btn btn-default" data-dismiss="modal"> Cancelar</button>#}
 {% endblock form-footer %}

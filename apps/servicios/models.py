@@ -11,9 +11,13 @@ from ..inicio.models import Estudiante, Institucion, Docente
 class Servicio(models.Model):
     nombre = models.CharField(max_length=50)
     descripcion = models.CharField(max_length=200)
+    unidad = models.CharField(max_length=200)
 
     def __unicode__(self):
         return 'SER: ' + self.nombre
+
+    def get_absolute_url(self):
+        return ''
 
 
 class Matricula(models.Model):

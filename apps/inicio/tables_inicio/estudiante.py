@@ -75,7 +75,7 @@ class Acciones(Column):
         _result += "<button type='button' class='btn btn-xs btn-primary' title='Editar' href='" + urlEditar + "' data-toggle='modal' data-target='#modalMaestro'><i class='fa fa-pencil'></i></button>&nbsp;"
 
         _urlEliminar = reverse(viewname='inicio:estudiante_eliminar', kwargs={'pk': obj.pk})
-        _result += "<button type='button' class='btn btn-xs btn-primary' title='Eliminar' href='" + _urlEliminar + "' data-toggle='modal' data-target='#modalMaestro'><i class='fa fa-trash'></i></button>&nbsp;"
+        _result += "<button type='button' class='btn btn-xs btn-danger' title='Eliminar' href='" + _urlEliminar + "' data-toggle='modal' data-target='#modalMaestro'><i class='fa fa-trash'></i></button>&nbsp;"
         return _result
 
 
@@ -95,14 +95,14 @@ class TablaEstudiante(TablaDefault):
 
     class Meta(TablaDefault.Meta):
         model = Estudiante
+        info_format = 'Estudiantes registrados: ' + '_TOTAL_'
         id = 'tablaEstudiante'
         ajax_source = ''
 
     def __init__(self):
         super(TablaEstudiante, self).__init__()
         self.opts.buttons = [
-            {'texto': 'Agregar', 'icono': 'fa fa-plus', 'url': reverse(viewname='inicio:estudiante_agregar'),
-             'modal': '#modalMaestro'},
+            {'texto': 'Agregar', 'icono': 'fa fa-plus', 'url': reverse(viewname='inicio:estudiante_agregar')},
             {'texto': 'Excel', 'icono': 'fa fa-download', 'extend': 'csv'},
             {'texto': 'Pdf', 'icono': 'fa fa-download', 'extend': 'pdf'},
         ]

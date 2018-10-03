@@ -120,6 +120,8 @@
                         "previous": "{{ table.addons.pagination.prev }}"
                     },
                     "search": "",
+                    "sLengthMenu": "_MENU_",
+                    "sProcessing": "Procesando informacion",
                 },
                 "initComplete": function (oSettings, json) {
                     {% if table.opts.search %}
@@ -129,14 +131,13 @@
                             .addClass('datatable-search')
                             {#.wrap('<span></span>')#}
                             .attr('placeholder', '{{ table.addons.search_box.placeholder }}')
-                        {#$("#{{ table.opts.id }}_filter").removeClass('dataTables_filter');#}
-
                         $('#{{ table.opts.id }}_length').addClass('text-center');
                         $('#{{ table.opts.id }}_length').css({'margin-top': '4px'});
                         $('#{{ table.opts.id }}_length label select').css({'border-radius': '4px'});
                         $('#{{ table.opts.id }}_length').removeClass('dataTables_length');
                         $('#{{ table.opts.id }}_info').addClass('input-sm input');
                         $('#{{ table.opts.id }}_info').css({'border-radius': '4px'});
+                        $('#{{ table.opts.id }}_info').removeClass('dataTables_info').addClass('text-info');
                     {% endif %}
                     {% if table.opts.pagination %}
                         $("#{{ table.opts.id }}_wrapper select").select2({
@@ -146,7 +147,7 @@
 
                     table_{{ table.opts.id }}.api().buttons().nodes().attr({
                         'data-toggle': 'modal',
-                        {#'data-target': '{{ table.opts.button.modal }}'#}
+                        'data-target': '#modalMaestro'
                     }).removeClass('dt-button').removeClass('btn-secondary').addClass('btn btn-xs btn-primary');
                 },
             {% endblock table_options %}

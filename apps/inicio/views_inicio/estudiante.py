@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import ProtectedError
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -8,7 +9,9 @@ from ..models import Estudiante
 from ..tables_inicio.estudiante import TablaEstudiante
 
 
-class EstudianteVista(TemplateView):
+class EstudianteVista(LoginRequiredMixin, TemplateView):
+    login_url = 'login'
+    redirect_field_name = ''
     template_name = 'estudiante/vista.html'
 
     def render_to_response(self, context, **response_kwargs):

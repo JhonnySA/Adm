@@ -43,7 +43,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.AddField(
-            model_name='grupo',
+            model_name='reusables',
             name='subnivel',
             field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='reusables.SubNivel'),
         ),

@@ -46,7 +46,7 @@
                             </a>
                             <ul class="treeview-menu">
                                 <li>
-                                    <a href="#">
+                                    <a href="{% url 'reusables:grupo_vista' %}">
                                         <i class="fa fa-film"></i> Crear grupo
                                     </a>
                                 </li>
@@ -62,9 +62,14 @@
                                 <i class="fa fa-product-hunt"></i> <span>Servicios</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                                </span>
                             </a>
                             <ul class="treeview-menu">
+                                <li>
+                                    <a href="{% url 'servicio:servicio_vista' %}">
+                                        <i class="fa fa-film"></i> Catalogo de servicios
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="#">
                                         <i class="fa fa-film"></i> Clases y/o practicas

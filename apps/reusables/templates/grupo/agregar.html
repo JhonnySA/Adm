@@ -1,0 +1,35 @@
+{% extends 'baseform.html' %}
+{% load static %}
+
+{% block form-header %}
+    {% if formGrupo.instance.pk == None %} Agregando {% else %} Editando {% endif %} grupo
+{% endblock form-header %}
+
+{% block form-post %}
+    <script type="text/javascript">
+        actionPost = 'refrescarTablaGrupo'
+
+        function refrescarTablaGrupo() {
+            $('#tablaGrupo').DataTable().ajax.reload(null, false);
+        }
+    </script>
+{% endblock form-post %}
+
+{% block form-body %}
+    <div class="row">
+        {% include 'campoform.html' with campo=formGrupo.horainicio ancho=6 %}
+        {% include 'campoform.html' with campo=formGrupo.horafin ancho=6 %}
+    </div>
+    <div class="row">
+        {% include 'campoform.html' with campo=formGrupo.aula ancho=6 %}
+        {% include 'campoform.html' with campo=formGrupo.dia ancho=6 %}
+    </div>
+    <div class="row">
+        {% include 'campoform.html' with campo=formGrupo.subnivel ancho=6 %}
+    </div>
+{% endblock form-body %}
+
+{% block form-footer %}
+    {% include 'button.html' with tipo='submit' clase='success' icono='save' texto='Guardar' %}
+    {% include 'button.html' with tipo='submit' clase='default' icono='arrow-left' dismiss='modal' texto='Cancelar' %}
+{% endblock form-footer %}

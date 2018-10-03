@@ -14,7 +14,7 @@ class Acciones(Column):
         _result += "<button type='button' class='btn btn-xs btn-primary' title='Editar' href='" + urlEditar + "' data-toggle='modal' data-target='#modalMaestro'><i class='fa fa-pencil'></i></button>&nbsp;"
 
         urlEliminar = reverse(viewname="inicio:docente_eliminar", kwargs={'pk': obj.pk})
-        _result += "<button type='button' class='btn btn-xs btn-primary' title='Eliminar' href='" + urlEliminar + "' data-toggle='modal' data-target='#modalMaestro'><i class='fa fa-trash'></i></button>&nbsp;"
+        _result += "<button type='button' class='btn btn-xs btn-danger' title='Eliminar' href='" + urlEliminar + "' data-toggle='modal' data-target='#modalMaestro'><i class='fa fa-trash'></i></button>&nbsp;"
         return _result
 
 
@@ -40,9 +40,8 @@ class TablaDocente(TablaDefault):
 
     class Meta(TablaDefault.Meta):
         model = Docente
+        info_format = 'Docentes registrados: ' + '_TOTAL_'
         id = 'tablaDocente'
-        # urlAgregar = '<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalMaestro" href="' + to_url + '"><span class="fa fa-plus-circle" aria-hidden="true"></span> Agregar</button>'
-        # ajax_source = ''
 
     def __init__(self):
         super(TablaDocente, self).__init__()

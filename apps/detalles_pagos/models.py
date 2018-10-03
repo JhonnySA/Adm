@@ -55,10 +55,10 @@ class GrupoDocente(models.Model):
 
     def EstadoGrupoDocente(self):
         if self.fechafin == None:
-            return 'Docente esta activo en el grupo: ' + self.grupo_id
+            return 'Docente esta activo en el reusables: ' + self.grupo_id
 
         else:
-            return 'Docente ha culminado su temporada en el grupo: ' + self.grupo_id
+            return 'Docente ha culminado su temporada en el reusables: ' + self.grupo_id
 
 
 class DetalleGrupoDocente(models.Model):

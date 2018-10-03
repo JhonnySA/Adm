@@ -48,6 +48,11 @@
     </div>
 {% endblock form-body %}
 
+{% block form-footer %}
+    {% include 'button.html' with tipo="submit" clase="success" icono="save" texto="Guardar" %}
+    {% include 'button.html' with tipo="submit" clase="default" icono="arrow-left" dismiss="modal" texto="Cancelar" %}
+{% endblock form-footer %}
+
 {% block form-script-end %}
     <form method="post" id="formDni">{% csrf_token %}</form>
     <div id="capaDni"></div>

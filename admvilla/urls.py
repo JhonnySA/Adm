@@ -28,5 +28,8 @@ urlpatterns = [
 
     # Select2
     url(r'^select2/', include('django_select2.urls')),
+
     url(r'^inicio/', include('apps.inicio.urls', namespace='inicio')),
+    url(r'^servicio/', include('apps.servicios.urls', namespace='servicio')),
+    url(r'^reusables/', include('apps.reusables.urls', namespace='reusables')),
 ]
