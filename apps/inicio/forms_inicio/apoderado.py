@@ -103,12 +103,31 @@ class ApoderadoForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         self.kwargs = kwargs.pop('kwargs')
-
-        if self.instance.pk:
-            self.fields['personaid'].initial = self.instance.persona.pk
-            self.fields['dni'].initial  = self.instance.persona.dni
-
         super(ApoderadoForm, self).__init__(*args, **kwargs)
+
+        _apoderado = None
+        try:
+            if self.kwargs['pk']:
+                _apoderado = Apoderado.objects.get(id=Estudiante.objects.get(id=self.kwargs['pk']).apoderado_id)
+        except Apoderado.DoesNotExist:
+            _apoderado = None
+        except Exception as e:
+            print(str(e.message))
+
+        if not _apoderado == None:
+            self.fields['personaid'].initial = _apoderado.persona_id
+            self.fields['dni'].initial = _apoderado.persona.dni
+            self.fields['paterno'].initial = _apoderado.persona.paterno
+            self.fields['materno'].initial = _apoderado.persona.materno
+            self.fields['nombre'].initial = _apoderado.persona.nombre
+            self.fields['sexo'].initial = _apoderado.persona.sexo
+            self.fields['fechanacimiento'].initial = _apoderado.persona.fechanacimiento
+            self.fields['telefono'].initial = _apoderado.persona.telefono
+            self.fields['celular'].initial = _apoderado.persona.celular
+            self.fields['correo'].initial = _apoderado.persona.correo
+            self.fields['direccion'].initial = _apoderado.persona.direccion
+            self.fields['ocupacion'].initial = _apoderado.ocupacion
+
         self.fields['celular'].widget.attrs['attr'] = "number"
         for i, (fname, field) in enumerate(self.fields.iteritems()):
             field.widget.attrs['class'] = field.widget.attrs.get('class', '') + ' form-control'
@@ -136,8 +155,18 @@ class ApoderadoForm(forms.ModelForm):
             if estudiante.persona.dni == apoderado['dni']:
                 self.add_error('dni', 'EL dni del Apoderado no puede ser igual al dni del Estudiante')
 
-    def save(self, commit=True):
-        estudiante = Estudiante.objects.get(pk=self.kwargs.get('estudiante'))
+    def save(self, commit=False):
+        estudiante = None
+        try:
+            if not self.kwargs.get('estudiante') == None:
+                estudiante = Estudiante.objects.get(pk=self.kwargs.get('estudiante'))
+            else:
+                estudiante = Estudiante.objects.get(pk=self.kwargs.get('pk'))
+        except Estudiante.DoesNotExist:
+            estudiante = None
+        except Exception as e:
+            print(str(e.message))
+
         apoderado = super(ApoderadoForm, self).save(commit=False)
         data = self.cleaned_data
 

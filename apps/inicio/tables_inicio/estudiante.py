@@ -46,17 +46,20 @@ class NombreApoderado(Column):
     def render(self, obj):
         _icono = ''
         _button = ''
-        urlAgregarApoderado = reverse(viewname='inicio:apoderado_agregar', kwargs={"estudiante": obj.pk})
+        # urlAgregarApoderado = reverse(viewname='inicio:apoderado_agregar', kwargs={"estudiante": obj.pk})
+        urlApoderado = None
 
         if obj.NombreApoderado() == '':
+            urlApoderado = reverse(viewname='inicio:apoderado_agregar', kwargs={"estudiante": obj.pk})
             _result = '<span class="pull-left"><code><i class="icon fa fa-warning"></i>Ninguno</code></span>'
             _button = 'btn btn-xs btn-danger pull-right'
             _icono = 'fa fa-plus'
         else:
+            urlApoderado = reverse(viewname='inicio:apoderado_editar', kwargs={"pk": obj.pk})
             _result = obj.NombreApoderado()
             _button = 'btn btn-xs btn-success pull-right'
             _icono = 'fa fa-pencil'
-        _result += "<button type='button' class='" + _button + "' title='Apoderado' href='" + urlAgregarApoderado + "' data-toggle='modal' data-target='#modalMaestro'><i class='" + _icono + "'></i></button>"
+        _result += "<button type='button' class='" + _button + "' title='Apoderado' href='" + urlApoderado + "' data-toggle='modal' data-target='#modalMaestro'><i class='" + _icono + "'></i></button>"
         return _result
 
 

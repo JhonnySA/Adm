@@ -44,7 +44,7 @@ class DocenteEditar(UpdateView):
     template_name = 'docente/agregar.html'
     model = Docente
     form_class = DocenteForm
-    context_object_name = 'uDocente'
+    # context_object_name = 'uDocente'
 
     def render_to_response(self, context, **response_kwargs):
         context['formDocente'] = self.get_form()

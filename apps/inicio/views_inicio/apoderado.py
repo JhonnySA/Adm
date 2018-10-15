@@ -43,7 +43,7 @@ class ApoderadoActualizar(UpdateView):
         return data
 
     def render_to_response(self, context, **response_kwargs):
-        context['formApoderaado'] = self.get_form()
+        context['formApoderado'] = self.get_form()
         return super(ApoderadoActualizar, self).render_to_response(context, **response_kwargs)
 
     def form_valid(self, form):

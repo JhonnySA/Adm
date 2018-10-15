@@ -58,9 +58,10 @@
     <div id="capaDni"></div>
 
     <script type="text/javascript">
-        $('#id_dni').parent().find('button').on('click', function () {
-            dni = $('#id_dni').val();
-            if (dni.length < $('#id_dni').attr('minlength')) {
+        // Funcion para buscar y verificar si el dni ingresado es correcto, sino mostrar alerta
+        function buscarPersona(dni, form) {
+            dnivalor = dni.val();
+            if (dnivalor.length < dni.attr('minlength')) {
                 swal({
                     title: 'Alerta',
                     text: 'El dni ingresado es incorrecto',
@@ -73,12 +74,24 @@
                 )
             } else {
                 url = '{% url 'inicio:persona_buscar' 0 %}';
-                url = url.replace('/0', '/' + dni);
-                $('#formDni').prop('action', url).submit();
+                url = url.replace('/0', '/' + dnivalor);
+                form.prop('action', url).submit();
+            }
+        };
+
+        // Llamar a la funcion de busqueda de persona al click del 'INPUT SEARCH' - ESTUDIANTE
+        $('#id_dni').parent().find('button').on('click', function () {
+            buscarPersona($('#id_dni'), $('#formDni'));
+        });
+
+        $('#id_dni').keypress(function (e) {
+            if (e.keyCode == 13) {
+                buscarPersona($('#id_dni'), $('#formDni'));
             }
         });
 
-        // AjaxForm para recuperar datos desde la persona al estudiante
+
+        // AjaxForm para recuperar datos desde la persona al docente
         $('#formDni').ajaxForm({
             dataType: 'json',
             target: $('#capaDni'),

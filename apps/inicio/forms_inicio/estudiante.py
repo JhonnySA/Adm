@@ -96,7 +96,6 @@ class EstudianteForm(forms.ModelForm):
             id=estudiante['personaid']
         )
         if persona.count() > 0:
-            # enviar un mensaje de error en el campo del formulario
             self.add_error('dni', 'EL dni ya existe')
 
     def save(self, commit=True):
@@ -116,7 +115,11 @@ class EstudianteForm(forms.ModelForm):
             persona = PersonaForm(data=data, instance=objPersona)
             persona.save()
 
-            objEstudiante = Estudiante.objects.get(persona_id=data.get('personaid'))
+            try:
+                objEstudiante = Estudiante.objects.get(persona_id=data.get('personaid'))
+            except Estudiante.DoesNotExist:
+                objEstudiante = None
+
             if objEstudiante:
                 objEstudiante.observacion = data.get('observacion')
                 objEstudiante.save()

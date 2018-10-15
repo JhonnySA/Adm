@@ -21,7 +21,7 @@ urlpatterns = [
 
     # Apoderado
     url(r'estudiante/(?P<estudiante>\d+)/agregar/apoderado/$', ApoderadoAgregar.as_view(), name='apoderado_agregar'),
-    url(r'estudiante/(?P<estudiante>\d+)/actualizar/apoderado/$', ApoderadoActualizar.as_view(), name='apoderado_actualizar'),
+    url(r'estudiante/(?P<pk>\d+)/actualizar/apoderado/$', ApoderadoActualizar.as_view(), name='apoderado_editar'),
 
     # Docente
     url(r'docente/$', DocenteVista.as_view(), name='docente_vista'),

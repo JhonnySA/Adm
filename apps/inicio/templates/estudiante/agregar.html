@@ -17,20 +17,22 @@
 {% block form-body %}
     {{ formEstudiante.personaid }}
     <div class="text-center lead">Informacion general de Estudiante</div>
+    <div class="row">{% include 'campoform.html' with campo=formEstudiante.dni ancho=6 espacio=3 %}</div>
+
+    {# Bloque para señalar que la persona no existe #}
+    <div id='busquedaPersona' class="text-center"></div>
+
     <div class="row">
-        {% include 'campoform.html' with campo=formEstudiante.dni ancho=6 espacio=3 %}
-    </div>
-    <div class="row">
-        {% include 'campoform.html' with campo=formEstudiante.observacion ancho=6 %}
         {% include 'campoform.html' with campo=formEstudiante.paterno ancho=6 %}
-    </div>
-    <div class="row">
         {% include 'campoform.html' with campo=formEstudiante.materno ancho=6 %}
-        {% include 'campoform.html' with campo=formEstudiante.nombre ancho=6 %}
     </div>
     <div class="row">
+        {% include 'campoform.html' with campo=formEstudiante.nombre ancho=6 %}
         {% include 'campoform.html' with campo=formEstudiante.sexo ancho=6 %}
+    </div>
+    <div class="row">
         {% include 'campoform.html' with campo=formEstudiante.fechanacimiento ancho=6 %}
+        {% include 'campoform.html' with campo=formEstudiante.observacion ancho=6 %}
     </div>
 {% endblock form-body %}
 
@@ -42,9 +44,6 @@
 {% block form-script-end %}
     <form method="post" id="formDni">{% csrf_token %}</form>
     <div id="capaDni"></div>
-
-    <form method="post" id="formDniApoderado">{% csrf_token %}</form>
-    <div id="capaDniApoderado"></div>
 
     <script type="text/javascript">
 
@@ -74,11 +73,23 @@
             buscarPersona($('#id_dni'), $('#formDni'));
         });
 
+        $('#id_dni').keypress(function (e) {
+            if (e.keyCode == 13) {
+                buscarPersona($('#id_dni'), $('#formDni'));
+            }
+        });
+
         // AjaxForm para recuperar datos desde la persona al estudiante
         $('#formDni').ajaxForm({
             dataType: 'json',
             target: $('#capaDni'),
             success: function (e) {
+                if (e.id == 0) {
+                    $('#busquedaPersona').html('<code><i class="icon fa fa-warning"></i> El dni de la persona ingresada no existe...!</code>')
+                    $('#id_paterno').focus();
+                } else {
+                    $('#busquedaPersona').html('');
+                }
                 $('#id_personaid').val(e.id);
                 $('#id_paterno').val(e.paterno);
                 $('#id_materno').val(e.materno);
@@ -91,26 +102,5 @@
                 $('#id_fechanacimiento').parent().data('datetimepicker').setDate(new Date(fecha));
             }
         });
-
-        // Llamar a la funcion de busqueda de persona al click del 'INPUT SEARCH' - ESTUDIANTE
-        {#$('#id_dniapo').parent().find('button').on('click', function () {#}
-        {#    // buscarPersona($('#id_dni'), $('#formDni'));#}
-        {#    if ($('#id_dniapo').val() == $('#id_dni').val()) {#}
-        {#        swal({#}
-        {#            title: 'Alerta',#}
-        {#            text: 'Este DNI es incorrecto, porque coincide con el del Estudiante',#}
-        {#            type: 'warning'#}
-        {#        }).then(function (value) {#}
-        {#                setTimeout(function () {#}
-        {#                    $('#id_dniapo').val('');#}
-        {#                    $('#id_dniapo').focus();#}
-        {#                }, 500);#}
-        {#            }#}
-        {#        )#}
-        {#    } else {#}
-        {#        console.log('buscar apo');#}
-        {#    }#}
-        {#    console.log('buscar apo');#}
-        {# });#}
     </script>
 {% endblock form-script-end %}

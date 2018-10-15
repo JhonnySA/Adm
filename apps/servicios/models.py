@@ -20,6 +20,17 @@ class Servicio(models.Model):
         return ''
 
 
+Turno = [
+    ('1', 'Mañana'),
+    ('2', 'Tarde')
+]
+
+TipoPago = (
+    ('1', 'Contado'),
+    ('2', 'Credito')
+)
+
+
 class Matricula(models.Model):
     fechamatricula = models.DateField()
     fechainicio = models.DateField()
@@ -27,7 +38,7 @@ class Matricula(models.Model):
     montototal = models.FloatField()
     descuento = models.FloatField()
     numcuota = models.PositiveIntegerField()
-    tipopago = models.CharField(max_length=50)
+    tipopago = models.CharField(max_length=1, choices=TipoPago)
     conceptodescuento = models.CharField(max_length=200)
     grado = models.CharField(max_length=1)
     observacion = models.CharField(max_length=200)
